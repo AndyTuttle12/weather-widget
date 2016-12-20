@@ -1,0 +1,22 @@
+body{
+}
+
+.container{
+	background-color: #ddd;
+	height: 100vh;
+}
+
+.row{
+	background-color: #fff;
+	border-radius: 10px;
+	max-width: 60%;
+	margin: 100px auto;
+}
+
+form{
+	margin-top: 20px;
+}
+
+input{
+	width: 200px;
+}
