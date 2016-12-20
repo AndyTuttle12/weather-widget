@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Canvas Practice</title>
+	<style type="text/css" media="screen">
+		#the-canvas{
+			border: 5px solid black;
+			margin: 20px;
+		}
+	</style>
+</head>
+<body>
+
+	<canvas id="the-canvas" height="500px" width="500px">
+
+
+	</canvas>
+
+
+	<script type="text/javascript">
+
+		var canvas = document.getElementById('the-canvas');
+		var context = canvas.getContext('2d');
+
+		function Ball(x,y,red,green,blue,rad, canvasX = 500, canvasY = 500, xSpeed = 1, ySpeed = 1){
+			this.x = x;
+			this.y = y;
+			this.r = red;
+			this.g = green;
+			this.b = blue;
+			this.rad = 50;
+			this.canvasX = canvasX;
+			this.canvasY = canvasY;
+			this.endArc = Math.PI * 2;
+			this.xDirection = 1;
+			this.yDirection = 1;
+			this.xSpeed = xSpeed;
+			this.ySpeed = ySpeed;
+		}
+
+		Ball.prototype.updateBall = function(){
+			// Check to see if we hit the right side
+			if(this.x >= this.canvasX - this.rad){
+				this.xDirection = -1;
+			// Left side
+			}else if(this.x <= 0 + this.rad){
+				this.xDirection = 1;
+			}
+			// Bottom
+			if(this.y >= this.canvasY - this.rad){
+				this.yDirection = -1;
+			// Top
+			}else if(this.y <= 0 + this.rad){
+				this.yDirection = 1;
+			}
+			this.x += this.xDirection * this.xSpeed;
+			this.y += this.yDirection * this.ySpeed;
+		}
+	  	Ball.prototype.start = function(){
+	  		this.draw();
+	  	};
+		var ball = new Ball(100,0,0,100,0,50,500,500,9,6);
+		
+		function run(){
+			ball.updateBall();
+			context.fillStyle = '#'+ball.r+ball.g+ball.b;
+			context.clearRect(0,0,ball.canvasX,ball.canvasY);
+			context.beginPath();
+			context.arc(ball.x,ball.y,ball.rad,0,ball.endArc);
+			console.log(ball.x,ball.y,ball.rad,ball.canvasX)
+			context.fill();
+			requestAnimationFrame(run);
+		}
+		run();
+
+		// context.strokeStyle = '#f00';
+		// context.lineWidth = 10;
+		// context.moveTo(100,100);
+		// context.lineTo(200,100);
+		// context.lineTo(110,160);
+		// context.lineTo(150,50);
+		// context.lineTo(190,160);
+		// context.lineTo(100,100);
+		// context.lineTo(200,100);
+		// context.stroke();
+
+		// context.strokeStyle = '#f00';
+		// context.fillStyle = '#00f';
+		// context.lineWidth = 10;
+		// context.beginPath();
+		// context.arc(250,250,100,0,1.5*Math.PI);
+		// context.fill();
+		// context.stroke();
+
+		// context.rect(300,50,100,100);
+		// context.stroke();
+		// var r = 0;
+		// var g = 0;
+		// var b = 0;
+		// var x = 50;
+		// var y = 50;
+		// radius = 50;
+		// endArc = 0;
+
+		// function draw(){
+		// 	context.fillStyle = '#'+r+g+b;
+		// 	context.clearRect(0,0,500,500);
+		// 	context.beginPath();
+		// 	context.arc(x,y,radius,0*Math.PI,Math.PI*endArc);
+		// 	context.fill();
+			// if((x <= 450)&&(x >= 50)&&(y >= 50)&&(y <= 450)){
+			// 	// y += (x * x)
+			// 	x += 1;
+			// 	y += 1;
+			// }
+			// 	if(
+			// 		(y >= 0)
+			// 		||(x >= 0)
+			// 	){
+			// 		y -;
+			// 		x -= 3;
+			// 	}
+			// 	else if(
+			// 		(y <= 450)
+			// 		||(x <= 450)
+			// 	){
+			// 		y += (x * x);
+			// 		x ++;
+			// 	}
+			// 	else{	
+			// 		x = 200;
+			// 		y = 200;
+			// 		x-= 500;
+			// 		y-= 500;
+			// 	}
+
+			// radius += 1;
+			// endArc += 1;
+			// if((r < 255)&&(b < 255)&&(g < 255)){
+			// 	r += Math.floor(Math.random()*2);
+			// 	g += Math.floor(Math.random()*2);
+			// 	b += Math.floor(Math.random()*2);
+			// }else{
+			// 	r -= Math.floor(Math.random()*2);
+			// 	g -= Math.floor(Math.random()*2);
+			// 	b -= Math.floor(Math.random()*2);
+			// }
+
+		
+		// var ballInterval = setInterval(draw, 40);
+
+	</script>
+
+</body>
+</html>
