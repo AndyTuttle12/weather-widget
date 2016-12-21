@@ -3,15 +3,21 @@ $(document).ready(function(){
 		event.preventDefault();
 		var location = $('#location').val();
 		var weatherUrl = 'http://api.openweathermap.org/data/2.5/weather?q='+ location +'&units=imperial&APPID=' + apiKey;
-		
+		console.log(weatherUrl);
 		$.getJSON(weatherUrl, function(weatherData){
 			console.log(weatherData);
 			var currentTemp = weatherData.main.temp;
+			var currentCode = weatherData.weather[0].id;
+			var currentCondition = weatherData.weather[0].description;
 			var name = weatherData.name;
 			var icon = weatherData.weather[0].icon + '.png';
 			$('#currentTemp').html("<img src='http://openweathermap.org/img/w/"+ icon +"'></img>The temp in " + name + " is currently " + currentTemp);
 			var canvas = $('#weather-canvas');
 			var context = canvas[0].getContext('2d');
+			var windSpeed = weatherData.wind.speed;
+			$('#wind span').html(windSpeed);
+			var humidity = weatherData.main.humidity;
+			$('#humidity span').html(humidity);
 
 			var lineColor = 'black';
 			if(currentTemp < 32){
@@ -25,15 +31,44 @@ $(document).ready(function(){
 			}else{
 				lineColor = '#f74f5d';
 			}
+
+			if(currentCode < 300){
+				$('.container').css('background-image', 'url("thunderstorm.jpg")');
+			}else if(currentCode < 400){
+				$('.container').css('background-image', 'url("drizzle.jpg")');
+			}else if(currentCode < 505){
+				$('.container').css('background-image', 'url("rain.jpg")');
+			}else if(currentCode == 511){
+				$('.container').css('background-image', 'url("freezing-rain.jpg")');
+			}else if(currentCode < 540){
+				$('.container').css('background-image', 'url("heavy-rain.jpg")');
+			}else if(currentCode < 650){
+				$('.container').css('background-image', 'url("snow.jpg")');
+			}else if(currentCode < 790){
+				$('.container').css('background-image', 'url("mist.jpg")');
+			}else if(currentCode == 800){
+				$('.container').css('background-image', 'url("clear-sky.jpg")');
+			}else if(currentCode == 801){
+				$('.container').css('background-image', 'url("few-clouds.jpg")');
+			}else if(currentCode < 805){
+				$('.container').css('background-image', 'url("cloudy.jpg")');
+			}else{
+				$('.container').css('background-image', 'url("wind.jpg")');
+			}
+
 			
 			var currentPercent = 0;
 			function animate(current){
 				context.clearRect(0,0,500, 500);
-				context.fillStyle = "#ccc";
+				context.fillStyle = "rgba(100,100,100,.4)";
 				context.beginPath();
 				context.arc(155,75,50,Math.PI * 0,Math.PI * 2);
 				context.closePath();
 				context.fill();
+
+				context.font = "20px Arial";
+				context.fillStyle = '#333';
+				context.fillText(currentCondition,20,30);
 
 				context.font = "40px Arial";
 				context.fillStyle = '#FFF';
@@ -54,5 +89,7 @@ $(document).ready(function(){
 			}
 			animate();
 		});
+
+		// $.getJSON()
 	});
 });

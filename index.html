@@ -11,7 +11,8 @@
 </head>
 <body>
 	<div class="container">
-		<div class="row text-center">
+		<div class="row text-center weather-row">
+			<h1>Weather Today</h1>
 			<form id="weather-form">
 			<label>Please Search for your location: <input type="text" id="location" placeholder="Location (City, State or Zip)"></label>
 			</form>
@@ -21,6 +22,14 @@
 
 			<canvas id="weather-canvas">
 			</canvas>
+			<div id="weather-details">
+				<div id="wind">
+					Wind: <span></span> mph
+				</div>
+				<div id="humidity">
+					Humidity: <span></span>%
+				</div>
+			</div>
 		</div>
 	</div>
 
